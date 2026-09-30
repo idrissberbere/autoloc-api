@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
+
 @Entity
 @Getter
 @Setter
@@ -17,5 +20,13 @@ public class Equipement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEquipement;
 
+
     private String libelle;
+
+
+
+    // Plusieurs équipements peuvent appartenir à plusieurs véhicules
+    @ManyToMany(mappedBy = "equipements")
+    private List<Vehicule> vehicules;
+
 }

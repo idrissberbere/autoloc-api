@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,7 +21,26 @@ public class Contrat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
 
+
     private LocalDate dateSignature;
+
+
     private BigDecimal montantTotal;
+
+
     private boolean valide;
+
+
+
+    // Un contrat appartient à une réservation
+    @OneToOne
+    @JoinColumn(name = "id_reservation")
+    private Reservation reservation;
+
+
+
+    // Un contrat peut avoir plusieurs paiements
+    @OneToMany(mappedBy = "contrat")
+    private List<Paiement> paiements;
+
 }

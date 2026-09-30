@@ -20,9 +20,21 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaiement;
 
+
     private BigDecimal montant;
+
+
     private LocalDate datePaiement;
+
 
     @Enumerated(EnumType.STRING)
     private ModePaiement modePaiement;
+
+
+
+    // Plusieurs paiements peuvent appartenir à un contrat
+    @ManyToOne
+    @JoinColumn(name = "id_contrat")
+    private Contrat contrat;
+
 }
