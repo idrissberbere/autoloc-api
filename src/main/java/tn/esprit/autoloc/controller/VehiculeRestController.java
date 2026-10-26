@@ -1,36 +1,46 @@
 package tn.esprit.autoloc.controller;
 
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.autoloc.domain.entite.Vehicule;
 import tn.esprit.autoloc.service.IVehiculeService;
 
-import java.util.List;
-
 @RestController
-@AllArgsConstructor
 @RequestMapping("/vehicule")
 public class VehiculeRestController {
 
-    private IVehiculeService vehiculeService;
+    private final IVehiculeService vehiculeService;
 
-    @GetMapping("/retrieve-all-vehicules")
-    public List<Vehicule> getVehicules() {
-        return vehiculeService.FindAll();
+    public VehiculeRestController(IVehiculeService vehiculeService) {
+        this.vehiculeService = vehiculeService;
     }
 
-    @PostMapping("/add-vehicule")
-    public Vehicule addVehicule(@RequestBody Vehicule vehicule) {
-        return vehiculeService.AddVehicule(vehicule);
+
+    @PutMapping("/affecter-agence/{idVehicule}/{idAgence}")
+    public void affecterVehiculeAAgence(
+            @PathVariable Long idVehicule,
+            @PathVariable Long idAgence) {
+
+        vehiculeService.affecterVehiculeAAgence(
+                idVehicule,
+                idAgence
+        );
     }
 
-    @PutMapping("/modify-vehicule")
-    public Vehicule updateVehicule(@RequestBody Vehicule vehicule) {
-        return vehiculeService.UpdateVehicule(vehicule);
+    @PutMapping("/desaffecter-agence/{idVehicule}")
+    public void desaffecterVehiculeDAgence(
+            @PathVariable Long idVehicule) {
+
+        vehiculeService.desaffecterVehiculeDAgence(idVehicule);
     }
 
-    @DeleteMapping("/remove-vehicule/{id}")
-    public void deleteVehicule(@PathVariable Long id) {
-        vehiculeService.deleteVehicule(id);
+
+
+    @PutMapping("/affecter-equipement/{idEquipement}/{idVehicule}")
+    public void affecterEquipementAVehicule(@PathVariable Long idEquipement, @PathVariable Long idVehicule) {
+        vehiculeService.affecterEquipementAVehicule(idEquipement, idVehicule);
+    }
+
+    @PutMapping("/desaffecter-equipement/{idEquipement}/{idVehicule}")
+    public void desaffecterEquipementDeVehicule(@PathVariable Long idEquipement, @PathVariable Long idVehicule) {
+        vehiculeService.desaffecterEquipementDeVehicule(idEquipement, idVehicule);
     }
 }

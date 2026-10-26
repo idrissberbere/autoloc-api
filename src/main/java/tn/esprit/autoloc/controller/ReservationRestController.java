@@ -1,36 +1,56 @@
 package tn.esprit.autoloc.controller;
 
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.autoloc.domain.entite.Reservation;
 import tn.esprit.autoloc.service.IReservationService;
 
-import java.util.List;
-
 @RestController
-@AllArgsConstructor
 @RequestMapping("/reservation")
 public class ReservationRestController {
 
-    private IReservationService reservationService;
+    private final IReservationService reservationService;
 
-    @GetMapping("/retrieve-all-reservations")
-    public List<Reservation> getReservations() {
-        return reservationService.FindAll();
+    public ReservationRestController(
+            IReservationService reservationService) {
+
+        this.reservationService = reservationService;
     }
 
-    @PostMapping("/add-reservation")
-    public Reservation addReservation(@RequestBody Reservation reservation) {
-        return reservationService.AddReservation(reservation);
+    // =========================
+    // CONTRAT -> RESERVATION
+    // =========================
+
+    @PutMapping("/affecter-contrat/{idContrat}/{idReservation}")
+    public void affecterContratAReservation(
+            @PathVariable Long idContrat,
+            @PathVariable Long idReservation) {
+
+        reservationService.affecterContratAReservation(
+                idContrat,
+                idReservation
+        );
     }
 
-    @PutMapping("/modify-reservation")
-    public Reservation updateReservation(@RequestBody Reservation reservation) {
-        return reservationService.UpdateReservation(reservation);
+    @PutMapping("/desaffecter-contrat/{idReservation}")
+    public void desaffecterContratDeReservation(
+            @PathVariable Long idReservation) {
+
+        reservationService.desaffecterContratDeReservation(
+                idReservation
+        );
     }
 
-    @DeleteMapping("/remove-reservation/{id}")
-    public void deleteReservation(@PathVariable Long id) {
-        reservationService.deleteReservation(id);
+    // =========================
+    // CLIENT -> RESERVATION
+    // =========================
+
+    @PutMapping("/affecter-client/{idClient}/{idReservation}")
+    public void affecterClientAReservation(
+            @PathVariable Long idClient,
+            @PathVariable Long idReservation) {
+
+        reservationService.affecterClientAReservation(
+                idClient,
+                idReservation
+        );
     }
 }

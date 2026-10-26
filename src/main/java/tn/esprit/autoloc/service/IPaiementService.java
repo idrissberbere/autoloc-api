@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IPaiementService {
 
+    // CRUD
     Paiement AddPaiement(Paiement paiement);
 
     void deletePaiement(Long id);
@@ -13,4 +14,7 @@ public interface IPaiementService {
     Paiement UpdatePaiement(Paiement paiement);
 
     List<Paiement> FindAll();
+
+    // Paiement -> Contrat
+    void affecterPaiementAContrat(Long idPaiement, Long idContrat);
 }
